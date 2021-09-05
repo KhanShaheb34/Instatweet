@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
-import { DataTypes } from "sequelize/types";
-import sequelize from "../database/connection";
+const { DataTypes } = require("sequelize");
+const sequelize = require("../database/connection");
 
-export const Credential = sequelize.define("credential", {
+const Credential = sequelize.define("credential", {
   id: {
     type: DataTypes.UUID,
     default: Sequelize.UUIDV4,
@@ -14,7 +14,9 @@ export const Credential = sequelize.define("credential", {
     allowNull: false,
   },
   password: {
-    type: DataTypes.STRING(),
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });
+
+module.exports = Credential;

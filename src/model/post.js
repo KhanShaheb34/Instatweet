@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
-import { DataTypes } from "sequelize/types";
-import sequelize from "../database/connection";
+const { DataTypes } = require("sequelize");
+const sequelize = require("../database/connection");
 
-export const Post = sequelize.define("post", {
+const Post = sequelize.define("post", {
   id: {
     type: DataTypes.UUID,
     default: Sequelize.UUIDV4,
@@ -13,3 +13,5 @@ export const Post = sequelize.define("post", {
     allowNull: false,
   },
 });
+
+module.exports = Post;

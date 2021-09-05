@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
-import { DataTypes } from "sequelize/types";
-import sequelize from "../database/connection";
+const { DataTypes } = require("sequelize");
+const sequelize = require("../database/connection");
 
-export const Comment = sequelize.define("comment", {
+const Comment = sequelize.define("comment", {
   id: {
     type: DataTypes.UUID,
     default: Sequelize.UUIDV4,
@@ -13,3 +13,5 @@ export const Comment = sequelize.define("comment", {
     allowNull: false,
   },
 });
+
+module.exports = Comment;

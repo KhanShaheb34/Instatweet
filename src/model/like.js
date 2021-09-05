@@ -1,11 +1,13 @@
 const Sequelize = require("sequelize");
-import { DataTypes } from "sequelize/types";
-import sequelize from "../database/connection";
+const { DataTypes } = require("sequelize");
+const sequelize = require("../database/connection");
 
-export const Like = sequelize.define("like", {
+const Like = sequelize.define("like", {
   id: {
     type: DataTypes.UUID,
     default: Sequelize.UUIDV4,
     primaryKey: true,
   },
 });
+
+module.exports = Like;
