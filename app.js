@@ -4,9 +4,9 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const sequelize = require("./db");
+const indexRouter = require("./src/routes/index");
+const usersRouter = require("./src/routes/users");
+const sequelize = require("./src/database/connection");
 
 const app = express();
 
