@@ -1,11 +1,17 @@
 const Comment = require("../model/comment");
-const Credential = require("../model/credential");
+const Follower = require("../model/follower");
 const Like = require("../model/like");
 const Post = require("../model/post");
 const User = require("../model/user");
 
-User.hasOne(Credential, { foreignKey: { allowNull: false } });
-Credential.belongsTo(User, { foreignKey: { allowNull: false } });
+User.hasMany(Follower, { foreignKey: "followerId" });
+User.hasMany(Follower, { foreignKey: "userId" });
+Follower.belongsTo(User, {
+  foreignKey: { name: "userId", allowNull: false },
+});
+Follower.belongsTo(User, {
+  foreignKey: { name: "followerId", allowNull: false },
+});
 
 User.hasMany(Post);
 Post.belongsTo(User, { foreignKey: { allowNull: false } });

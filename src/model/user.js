@@ -18,6 +18,15 @@ const User = sequelize.define("user", {
     type: DataTypes.STRING(100),
     unique: true,
   },
+  username: {
+    type: DataTypes.STRING(15),
+    unique: true,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = User;

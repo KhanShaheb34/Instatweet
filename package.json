@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "kmserver",
   "version": "0.0.0",
   "private": true,
   "scripts": {
