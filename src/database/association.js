@@ -1,8 +1,8 @@
-const Comment = require("../model/comment");
-const Follower = require("../model/follower");
-const Like = require("../model/like");
-const Post = require("../model/post");
-const User = require("../model/user");
+const Comment = require("../models/commentModel");
+const Follower = require("../models/followerModel");
+const Like = require("../models/likeModel");
+const Post = require("../models/postModel");
+const User = require("../models/userModel");
 
 User.hasMany(Follower, { foreignKey: "followerId" });
 User.hasMany(Follower, { foreignKey: "userId" });

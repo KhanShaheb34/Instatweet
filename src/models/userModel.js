@@ -5,7 +5,8 @@ const sequelize = require("../database/connection");
 const User = sequelize.define("user", {
   id: {
     type: DataTypes.UUID,
-    default: Sequelize.UUIDV4,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
     primaryKey: true,
   },
   bio: {
@@ -17,6 +18,7 @@ const User = sequelize.define("user", {
   email: {
     type: DataTypes.STRING(100),
     unique: true,
+    allowNull: false,
   },
   username: {
     type: DataTypes.STRING(15),
