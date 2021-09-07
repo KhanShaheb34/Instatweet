@@ -27,10 +27,10 @@ exports.login = catchAsync(async (req, res, next) => {
 
   delete user.password;
 
-  const jwt_secret = process.env.JWT_SECRET || "longSecretToken";
+  const jwtSecret = process.env.JWT_SECRET || "longSecretToken";
   const monthInMs = 30 * 24 * 60 * 60 * 1000;
 
-  const token = jwt.sign(user, jwt_secret, {
+  const token = jwt.sign(user, jwtSecret, {
     expiresIn: "30d",
   });
 
