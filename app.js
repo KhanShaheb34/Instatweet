@@ -6,6 +6,7 @@ const logger = require("morgan");
 
 const indexRouter = require("./src/routes/index");
 const usersRouter = require("./src/routes/usersRoutes");
+const errorHandler = require("./src/middlewares/errorHandler");
 
 require("./src/database/connection");
 require("./src/database/association");
@@ -20,5 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+app.use(errorHandler);
 
 module.exports = app;
