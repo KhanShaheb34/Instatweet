@@ -5,7 +5,8 @@ const sequelize = require("../database/connection");
 const Comment = sequelize.define("comment", {
   id: {
     type: DataTypes.UUID,
-    default: Sequelize.UUIDV4,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
     primaryKey: true,
   },
   content: {
