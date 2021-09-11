@@ -23,6 +23,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   });
   if (user == null) return next(new AppError("Please login again", 401));
 
-  req.user = user;
+  req.body.user = user;
   next();
 });
