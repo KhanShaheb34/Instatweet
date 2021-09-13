@@ -9,6 +9,7 @@ const usersRouter = require("./src/routes/userRoutes");
 const postRouter = require("./src/routes/postRoute");
 const commentRouter = require("./src/routes/commentRoute");
 const likeRouter = require("./src/routes/likeRoute");
+const followerRouter = require("./src/routes/followerRoute");
 const errorHandler = require("./src/middlewares/errorHandler");
 
 require("./src/database/connection");
@@ -27,6 +28,7 @@ app.use("/users", usersRouter);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
 app.use("/likes", likeRouter);
+app.use("/followers", followerRouter);
 
 app.use(errorHandler);
 
