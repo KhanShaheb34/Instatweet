@@ -2,18 +2,25 @@ const Post = require("../models/postModel");
 const Comment = require("../models/commentModel");
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/UserModel");
+const Like = require("../models/likeModel");
+const Sequelize = require("sequelize");
+const sequelize = require("../database/connection");
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
   const posts = await Post.findAll({
     include: [
       {
         model: Comment,
-        attributes: ["content"],
-        include: [{ model: User, attributes: ["username"] }],
+        attributes: ["id", "content"],
+        include: [{ model: User, attributes: ["id", "username"] }],
+      },
+      {
+        model: Like,
+        attributes: ["id"],
       },
     ],
-    order: [["createdAt", "DESC"]],
   });
+
   return res.json(posts);
 });
 
