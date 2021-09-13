@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Follower = require("../models/followerModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
@@ -43,6 +44,29 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.findAll();
-  return res.json(users);
+  const users = await User.findAll({
+    include: {
+      model: Follower,
+      attributes: ["followerId"],
+      include: { model: User, attributes: ["username"] },
+    },
+  });
+  return res.json({ isSuccess: true, data: users });
+});
+
+exports.getSingleUser = catchAsync(async (req, res, next) => {
+  const { username } = req.params;
+  const user = await User.findOne({
+    where: { username },
+    include: {
+      model: Follower,
+      attributes: ["followerId"],
+      include: { model: User, attributes: ["username"] },
+    },
+  });
+  if (!user)
+    return res
+      .status(404)
+      .json({ isSuccess: false, data: { message: "User not found" } });
+  return res.json({ isSuccess: true, data: user });
 });
