@@ -24,7 +24,15 @@ export const getPostComments = async (postId: string) => {
       })[]
     >
   >(`${AppRouteApi.Comment.Root()}/${postId}`);
-  console.log(res);
+
+  if (res.data.status === "success") return res.data.data;
+  else return false;
+};
+
+export const deleteComment = async (commentId: string) => {
+  const res = await AxiosAuth.delete<ApiResponseSchema<{ message: string }>>(
+    `${AppRouteApi.Comment.Root()}/${commentId}`
+  );
 
   if (res.data.status === "success") return res.data.data;
   else return false;

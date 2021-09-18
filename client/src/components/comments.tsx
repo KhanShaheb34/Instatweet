@@ -1,5 +1,5 @@
 import { Avatar } from "@chakra-ui/avatar";
-import { Button } from "@chakra-ui/button";
+import { Button, IconButton } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import {
@@ -13,8 +13,14 @@ import {
 import { Spinner } from "@chakra-ui/spinner";
 import moment from "moment";
 import { useState, useEffect } from "react";
-import { makeComment, getPostComments } from "../controllers/comment";
+import {
+  makeComment,
+  getPostComments,
+  deleteComment,
+} from "../controllers/comment";
 import { CommentSchema } from "../models/comment";
+import { AiOutlineDelete } from "react-icons/ai";
+import { useAppSelector } from "../redux/ReduxStore";
 
 export const CommentsModal = ({
   isOpen,
@@ -33,6 +39,7 @@ export const CommentsModal = ({
       user: { username: string };
     })[]
   >([]);
+  const { username } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     getPostComments(postId).then((res) => {
@@ -48,6 +55,11 @@ export const CommentsModal = ({
     const res = await makeComment(postId, newComment);
     res && setComments([...comments, res]);
     setIsButtonLoading(false);
+  };
+
+  const handleDelete = async (commentId: string) => {
+    setComments(comments.filter((comment) => comment.id !== commentId));
+    await deleteComment(commentId);
   };
 
   return (
@@ -70,11 +82,27 @@ export const CommentsModal = ({
                         height="50px"
                         border="1px solid #DBDBDB"
                       />
-                      <Box ml={3}>
-                        <Text fontWeight="bold">{comment.user.username}</Text>
-                        <Text size="sm" fontWeight="light" color="#aaa">
-                          {moment(comment.createdAt).fromNow()}
-                        </Text>
+                      <Box ml={3} w="100%">
+                        <Box display="flex" justifyContent="space-between">
+                          <Box>
+                            <Text fontWeight="bold">
+                              {comment.user.username}
+                            </Text>
+                            <Text size="sm" fontWeight="light" color="#aaa">
+                              {moment(comment.createdAt).fromNow()}
+                            </Text>
+                          </Box>
+                          {comment.user.username === username && (
+                            <IconButton
+                              variant="outline"
+                              colorScheme="red"
+                              aria-label="Delete Comment"
+                              icon={<AiOutlineDelete />}
+                              size="sm"
+                              onClick={() => handleDelete(comment.id)}
+                            />
+                          )}
+                        </Box>
                         <Text>{comment.content}</Text>
                       </Box>
                     </Box>

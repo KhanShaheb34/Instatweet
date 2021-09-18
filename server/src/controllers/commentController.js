@@ -3,10 +3,10 @@ const User = require("../models/UserModel");
 const catchAsync = require("../utils/catchAsync");
 
 exports.getPostComments = catchAsync(async (req, res, next) => {
-  const { postId } = req.params;
+  const { id } = req.params;
 
   const comments = await Comment.findAll({
-    where: { postId },
+    where: { postId: id },
     include: { model: User, attributes: ["username"] },
   });
 
@@ -34,4 +34,17 @@ exports.createComment = catchAsync(async (req, res, next) => {
   });
 
   res.status(201).json({ status: "success", data: responseComment });
+});
+
+exports.deleteComment = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const {
+    user: { id: userId },
+  } = req.body;
+
+  const comment = await Comment.destroy({
+    where: { id, userId },
+  });
+
+  return res.json({ status: "success", data: { message: "Comment Deleted" } });
 });
