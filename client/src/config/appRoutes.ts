@@ -11,4 +11,6 @@ export const AppRouteApi = {
 export const AppRouteUi = {
   Root: "",
   Home: () => `${AppRouteUi.Root}/`,
+  Login: () => `${AppRouteUi.Root}/login`,
+  Logout: () => `${AppRouteUi.Root}/logout`,
 };

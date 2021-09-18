@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 import { Box } from "@chakra-ui/layout";
 import { useState } from "react";
-import { signup } from "../controllers/auth";
+import { signupController } from "../controllers/auth";
 import { useToast } from "@chakra-ui/toast";
 
 export const SignupForm = () => {
@@ -14,7 +14,7 @@ export const SignupForm = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const success = await signup(username, email, password);
+    const success = await signupController(username, email, password);
     toast({
       title: success
         ? "Account Created. Please log in."
