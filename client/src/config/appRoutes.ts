@@ -9,6 +9,9 @@ export const AppRouteApi = {
   Post: {
     Root: () => `${AppRouteApi.Root}/posts`,
   },
+  Like: {
+    Root: () => `${AppRouteApi.Root}/likes`,
+  },
 };
 
 export const AppRouteUi = {

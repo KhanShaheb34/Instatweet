@@ -26,7 +26,7 @@ exports.createLike = catchAsync(async (req, res, next) => {
   return res.status(201).json({
     status: "success",
     data: {
-      like: newLike,
+      message: "Liked",
     },
   });
 });
