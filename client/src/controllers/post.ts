@@ -1,9 +1,7 @@
 import { AxiosAuth } from "../axios";
 import { AppRouteApi } from "../config/appRoutes";
 import { ApiResponseSchema } from "../models/apiResponse";
-import { CommentSchema } from "../models/comment";
 import { ExtendedPostSchema } from "../models/post";
-import { UserSchema } from "../models/user";
 
 export const getAllPosts = async () => {
   const res = await AxiosAuth.get<ApiResponseSchema<ExtendedPostSchema[]>>(

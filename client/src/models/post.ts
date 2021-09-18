@@ -13,6 +13,5 @@ export type PostSchema = {
 };
 
 export type ExtendedPostSchema = PostSchema & {
-  comments: (CommentSchema & { user: UserSchema })[];
   user: UserSchema;
 };

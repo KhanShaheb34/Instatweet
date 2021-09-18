@@ -8,13 +8,6 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
   const posts = await Post.findAll({
     include: [
       {
-        model: Comment,
-        include: [{ model: User }],
-      },
-      {
-        model: Like,
-      },
-      {
         model: User,
       },
     ],

@@ -9,6 +9,8 @@ import { likePost } from "../controllers/post";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { CommentsModal } from "./comments";
 import moment from "moment";
+import { IconButton } from "@chakra-ui/button";
+import { AiOutlineDelete } from "react-icons/ai";
 
 export const Post = (props: ExtendedPostSchema) => {
   const { id } = useAppSelector((state) => state.auth);
@@ -28,6 +30,8 @@ export const Post = (props: ExtendedPostSchema) => {
     likePost(props.id).then((res) => res && setLiked(res.message === "Liked"));
   };
 
+  const handleDelete = () => {};
+
   return (
     <>
       <Box
@@ -37,18 +41,27 @@ export const Post = (props: ExtendedPostSchema) => {
         rounded="md"
         bg="white"
       >
-        <Box py={2} px={3} display="flex" alignItems="center">
-          <Avatar
-            src={`https://avatars.dicebear.com/api/micah/${props.user.username}.svg`}
-            width="45px"
-            height="45px"
-            border="1px solid #DBDBDB"
-          />
-          <Box ml={3}>
-            <Text fontWeight="bold">{props.user.username}</Text>
-            <Text size="sm" fontWeight="light" color="#aaa">
-              {moment(props.createdAt).fromNow()}
+        <Box py={2} px={3} display="flex">
+          <Box display="flex" alignItems="center">
+            <Avatar
+              src={`https://avatars.dicebear.com/api/micah/${props.user.username}.svg`}
+              width="40px"
+              height="40px"
+              border="1px solid #DBDBDB"
+            />
+            <Text ml={3} fontWeight="bold">
+              {props.user.username}
             </Text>
+            {ownPost && (
+              <IconButton
+                variant="outline"
+                colorScheme="red"
+                aria-label="Delete Comment"
+                icon={<AiOutlineDelete />}
+                size="sm"
+                onClick={handleDelete}
+              />
+            )}
           </Box>
         </Box>
 
@@ -88,8 +101,8 @@ export const Post = (props: ExtendedPostSchema) => {
               <BsChatSquare />
             </MotionBox>
           </Box>
-          <Text fontSize="sm">
-            {props.likes.length} likes and {props.comments.length} comments
+          <Text size="sm" fontWeight="light">
+            {moment(props.createdAt).fromNow()}
           </Text>
         </Box>
       </Box>
