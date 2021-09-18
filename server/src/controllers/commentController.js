@@ -1,9 +1,16 @@
 const Comment = require("../models/commentModel");
+const User = require("../models/UserModel");
 const catchAsync = require("../utils/catchAsync");
 
-exports.getAllComments = catchAsync(async (req, res, next) => {
-  const comments = await Comment.findAll();
-  return res.json(comments);
+exports.getPostComments = catchAsync(async (req, res, next) => {
+  const { postId } = req.params;
+
+  const comments = await Comment.findAll({
+    where: { postId },
+    include: { model: User, attributes: ["username"] },
+  });
+
+  return res.json({ status: "success", data: comments });
 });
 
 exports.createComment = catchAsync(async (req, res, next) => {
@@ -21,5 +28,10 @@ exports.createComment = catchAsync(async (req, res, next) => {
     postId,
   });
 
-  res.status(201).json({ status: "success", data: newComment });
+  const responseComment = await Comment.findOne({
+    where: { id: newComment.id },
+    include: { model: User, attributes: ["username"] },
+  });
+
+  res.status(201).json({ status: "success", data: responseComment });
 });

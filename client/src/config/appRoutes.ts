@@ -12,6 +12,9 @@ export const AppRouteApi = {
   Like: {
     Root: () => `${AppRouteApi.Root}/likes`,
   },
+  Comment: {
+    Root: () => `${AppRouteApi.Root}/comments`,
+  },
 };
 
 export const AppRouteUi = {
