@@ -21,7 +21,7 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
     ],
   });
 
-  return res.json(posts);
+  return res.json({ status: "success", data: posts });
 });
 
 exports.createPost = catchAsync(async (req, res, next) => {
@@ -36,5 +36,5 @@ exports.createPost = catchAsync(async (req, res, next) => {
     content,
     userId,
   });
-  res.status(201).json(newPost);
+  res.status(201).json({ status: "success", data: newPost });
 });

@@ -16,7 +16,9 @@ exports.register = catchAsync(async (req, res, next) => {
     next(new AppError("User already exists", 409));
   }
 
-  return res.status(201).json({ message: "User Created" });
+  return res
+    .status(201)
+    .json({ status: "success", data: { message: "User Created" } });
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -40,18 +42,17 @@ exports.login = catchAsync(async (req, res, next) => {
     httpOnly: true,
   });
 
-  return res.json({ message: "Login Successful", user });
+  return res.json({ status: "success", data: user });
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.findAll({
     include: {
       model: Follower,
-      attributes: ["followerId"],
-      include: { model: User, attributes: ["username"] },
+      include: { model: User },
     },
   });
-  return res.json({ isSuccess: true, data: users });
+  return res.json({ status: "success", data: users });
 });
 
 exports.getSingleUser = catchAsync(async (req, res, next) => {
@@ -60,13 +61,13 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
     where: { username },
     include: {
       model: Follower,
-      attributes: ["followerId"],
-      include: { model: User, attributes: ["username"] },
+      include: { model: User },
     },
   });
   if (!user)
     return res
       .status(404)
-      .json({ isSuccess: false, data: { message: "User not found" } });
-  return res.json({ isSuccess: true, data: user });
+      .json({ status: "error", data: { message: "User not found" } });
+
+  return res.json({ status: "success", data: user });
 });

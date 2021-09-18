@@ -11,7 +11,7 @@ exports.createLike = catchAsync(async (req, res, next) => {
   if (existingLike) {
     existingLike.destroy();
     return res.status(201).json({
-      isSuccess: true,
+      status: "success",
       data: {
         message: "Disliked",
       },
@@ -24,7 +24,7 @@ exports.createLike = catchAsync(async (req, res, next) => {
   });
 
   return res.status(201).json({
-    isSuccess: true,
+    status: "success",
     data: {
       like: newLike,
     },

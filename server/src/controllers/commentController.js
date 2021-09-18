@@ -21,5 +21,5 @@ exports.createComment = catchAsync(async (req, res, next) => {
     postId,
   });
 
-  res.status(201).json(newComment);
+  res.status(201).json({ status: "success", data: newComment });
 });

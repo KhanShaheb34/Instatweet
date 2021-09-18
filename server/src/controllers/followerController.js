@@ -9,7 +9,7 @@ exports.createFollower = catchAsync(async (req, res, next) => {
 
   if (followerId === userId)
     return res.status(400).json({
-      isSuccess: false,
+      status: "error",
       data: { message: "You can't follow yourself" },
     });
 
@@ -19,7 +19,7 @@ exports.createFollower = catchAsync(async (req, res, next) => {
   if (existingFollower) {
     existingFollower.destroy();
     return res.status(201).json({
-      isSuccess: true,
+      status: "success",
       data: {
         message: "Unfollowed",
       },
@@ -32,7 +32,7 @@ exports.createFollower = catchAsync(async (req, res, next) => {
   });
 
   return res.status(201).json({
-    isSuccess: true,
+    status: "success",
     data: {
       follower: newFollower,
     },
