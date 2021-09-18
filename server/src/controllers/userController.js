@@ -5,6 +5,14 @@ const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
+const generateToken = (user) => {
+  const jwtSecret = process.env.JWT_SECRET || "longSecretToken";
+  const token = jwt.sign(user, jwtSecret, {
+    expiresIn: "30d",
+  });
+  return token;
+};
+
 exports.register = catchAsync(async (req, res, next) => {
   const { email, username, password: plainPassword } = req.body;
   const salt = await bcrypt.genSalt(10);
@@ -27,19 +35,9 @@ exports.login = catchAsync(async (req, res, next) => {
 
   delete user.password;
 
-  const jwtSecret = process.env.JWT_SECRET || "longSecretToken";
-  const monthInMs = 30 * 24 * 60 * 60 * 1000;
+  const token = generateToken(user);
 
-  const token = jwt.sign(user, jwtSecret, {
-    expiresIn: "30d",
-  });
-
-  res.cookie("jwt", token, {
-    expires: new Date(Date.now() + monthInMs),
-    httpOnly: true,
-  });
-
-  return res.json({ status: "success", data: user });
+  return res.json({ status: "success", data: { user, token } });
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
