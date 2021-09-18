@@ -11,14 +11,11 @@ exports.register = catchAsync(async (req, res, next) => {
   const password = await bcrypt.hash(plainPassword, salt);
 
   try {
-    await User.create({ email, username, password });
+    const user = await User.create({ email, username, password });
+    return res.status(201).json({ status: "success", data: user });
   } catch {
-    next(new AppError("User already exists", 409));
+    return next(new AppError("User already exists", 409));
   }
-
-  return res
-    .status(201)
-    .json({ status: "success", data: { message: "User Created" } });
 });
 
 exports.login = catchAsync(async (req, res, next) => {
