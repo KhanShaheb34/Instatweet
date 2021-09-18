@@ -8,11 +8,14 @@ import { getAllPosts } from "../controllers/post";
 import { ExtendedPostSchema } from "../models/post";
 
 export const Home = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState<ExtendedPostSchema[]>([]);
 
   useEffect(() => {
-    getAllPosts().then((res) => res && setPosts(res));
+    getAllPosts().then((res) => {
+      res && setPosts(res);
+      setIsLoading(false);
+    });
   }, []);
 
   return (

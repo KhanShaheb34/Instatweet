@@ -2,7 +2,6 @@ import { AxiosAuth } from "../axios";
 import { AppRouteApi } from "../config/appRoutes";
 import { ApiResponseSchema } from "../models/apiResponse";
 import { ExtendedPostSchema } from "../models/post";
-import { LikeSchema } from "../models/like";
 
 export const getAllPosts = async () => {
   const res = await AxiosAuth.get<ApiResponseSchema<ExtendedPostSchema[]>>(
