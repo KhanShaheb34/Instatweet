@@ -1,12 +1,18 @@
-import { Like } from "./like";
-import { Comment } from "./comment";
+import { LikeSchema } from "./like";
+import { CommentSchema } from "./comment";
+import { UserSchema } from "./user";
 
-export type Post = {
+export type PostSchema = {
   id: string;
   content: string;
   createdAt: string;
   updatedAt: string;
   userId: string;
-  comments: Comment[];
-  likes: Like[];
+  comments: CommentSchema[];
+  likes: LikeSchema[];
+};
+
+export type ExtendedPostSchema = PostSchema & {
+  comments: (CommentSchema & { user: UserSchema })[];
+  user: UserSchema;
 };

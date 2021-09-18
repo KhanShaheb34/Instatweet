@@ -1,4 +1,4 @@
-export type Like = {
+export type LikeSchema = {
   id: string;
   userId: string;
   postId: string;
