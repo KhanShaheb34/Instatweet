@@ -1,7 +1,7 @@
-import { Spinner } from "@chakra-ui/spinner";
 import { useState, useEffect } from "react";
 import { AddPost } from "../components/addPost";
 import { Post } from "../components/post";
+import { PostSkeleton } from "../components/postSkeleton";
 import { getAllPosts } from "../controllers/post";
 import { ExtendedPostSchema } from "../models/post";
 import { Layout } from "./layout";
@@ -29,7 +29,9 @@ export const Home = () => {
     <Layout>
       <AddPost onPost={onPost} />
       {isLoading ? (
-        <Spinner size="xs" />
+        <>
+          <PostSkeleton />
+        </>
       ) : (
         <>
           {posts.map((post) => (

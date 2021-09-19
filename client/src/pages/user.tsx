@@ -4,7 +4,6 @@ import { Layout } from "./layout";
 import { ExtendedUserSchema } from "../models/user";
 import { getSingleUser } from "../controllers/user";
 import { useToast } from "@chakra-ui/toast";
-import { Spinner } from "@chakra-ui/spinner";
 import { Box, Heading, Text } from "@chakra-ui/layout";
 import { Avatar } from "@chakra-ui/avatar";
 import { Post } from "../components/post";
@@ -13,6 +12,7 @@ import { AddPost } from "../components/addPost";
 import { ExtendedPostSchema } from "../models/post";
 import { EditProfileButton } from "../components/editProfile";
 import { FollowButton } from "../components/followButton";
+import { UserSkeleton } from "../components/userSkeleton";
 
 export const User = () => {
   const { username } = useParams<{ username: string }>();
@@ -57,7 +57,7 @@ export const User = () => {
   return (
     <Layout>
       {isLoading || !user ? (
-        <Spinner />
+        <UserSkeleton />
       ) : (
         <>
           <Box border="1px solid #DBDBDB" my={4} rounded="md" bg="white">
