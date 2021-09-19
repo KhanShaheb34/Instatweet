@@ -10,13 +10,13 @@ function App() {
     <ChakraProvider>
       <Router>
         <Switch>
-          <Route path="/logout">
+          <Route exact path="/logout">
             <Logout />
           </Route>
-          <Route path="/login">
+          <Route exact path="/login">
             <Login />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
           </Route>
         </Switch>

@@ -7,6 +7,7 @@ import { Navbar } from "../components/navbar";
 import { Post } from "../components/post";
 import { getAllPosts } from "../controllers/post";
 import { ExtendedPostSchema } from "../models/post";
+import { Layout } from "./layout";
 
 export const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,20 +29,17 @@ export const Home = () => {
   };
 
   return (
-    <Box bg="#FAFAFA" minH="100vh">
-      <Navbar />
-      <Container maxW="xl">
-        <AddPost onPost={onPost} />
-        {isLoading ? (
-          <Spinner size="xs" />
-        ) : (
-          <>
-            {posts.map((post) => (
-              <Post key={post.id} onDelete={onDelete} {...post} />
-            ))}
-          </>
-        )}
-      </Container>
-    </Box>
+    <Layout>
+      <AddPost onPost={onPost} />
+      {isLoading ? (
+        <Spinner size="xs" />
+      ) : (
+        <>
+          {posts.map((post) => (
+            <Post key={post.id} onDelete={onDelete} {...post} />
+          ))}
+        </>
+      )}
+    </Layout>
   );
 };
