@@ -31,3 +31,13 @@ export const checkFollower = async (userId: string) => {
   if (res.data.status === "success") return res.data.data;
   else return false;
 };
+
+export const updateUser = async (name: string, bio: string) => {
+  const res = await AxiosAuth.put<ApiResponseSchema<ExtendedUserSchema>>(
+    AppRouteApi.User.Root(),
+    { name, bio }
+  );
+
+  if (res.data.status === "success") return res.data.data;
+  else return false;
+};
