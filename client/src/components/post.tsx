@@ -12,6 +12,8 @@ import moment from "moment";
 import { IconButton } from "@chakra-ui/button";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useToast } from "@chakra-ui/toast";
+import { Link } from "react-router-dom";
+import { AppRouteUi } from "../config/appRoutes";
 
 export const Post = (
   props: ExtendedPostSchema & { onDelete: (postId: string) => void }
@@ -55,7 +57,12 @@ export const Post = (
         bg="white"
       >
         <Box py={2} px={3} display="flex" justifyContent="space-between">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            as={Link}
+            to={`/${props.user.username}`}
+          >
             <Avatar
               src={`https://avatars.dicebear.com/api/micah/${props.user.username}.svg`}
               width="40px"
