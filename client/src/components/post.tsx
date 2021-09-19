@@ -22,7 +22,7 @@ export const Post = (props: ExtendedPostSchema) => {
   const ownPost = props.userId === id;
 
   const [liked, setLiked] = useState(
-    props.likes.filter((like) => like.userId === id).length > 0
+    props.likes?.filter((like) => like.userId === id).length > 0
   );
 
   const handleLike = () => {

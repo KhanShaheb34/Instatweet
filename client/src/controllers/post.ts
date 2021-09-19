@@ -21,3 +21,13 @@ export const likePost = async (postId: string) => {
   if (res.data.status === "success") return res.data.data;
   else return false;
 };
+
+export const createPost = async (content: string) => {
+  const res = await AxiosAuth.post<ApiResponseSchema<ExtendedPostSchema>>(
+    AppRouteApi.Post.Root(),
+    { content }
+  );
+
+  if (res.data.status === "success") return res.data.data;
+  else return false;
+};

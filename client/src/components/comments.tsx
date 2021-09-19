@@ -51,9 +51,9 @@ export const CommentsModal = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setIsButtonLoading(true);
-    setNewComment("");
     const res = await makeComment(postId, newComment);
     res && setComments([...comments, res]);
+    setNewComment("");
     setIsButtonLoading(false);
   };
 

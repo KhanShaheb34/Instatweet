@@ -19,11 +19,15 @@ export const Home = () => {
     });
   }, []);
 
+  const onPost = (post: ExtendedPostSchema) => {
+    setPosts([post, ...posts]);
+  };
+
   return (
     <Box bg="#FAFAFA" minH="100vh">
       <Navbar />
       <Container maxW="xl">
-        <AddPost />
+        <AddPost onPost={onPost} />
         {isLoading ? (
           <Spinner size="xs" />
         ) : (

@@ -10,7 +10,11 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
       {
         model: User,
       },
+      {
+        model: Like,
+      },
     ],
+    order: [["createdAt", "DESC"]],
   });
 
   return res.json({ status: "success", data: posts });
@@ -28,5 +32,18 @@ exports.createPost = catchAsync(async (req, res, next) => {
     content,
     userId,
   });
-  res.status(201).json({ status: "success", data: newPost });
+
+  const responsePost = await Post.findOne({
+    where: { id: newPost.id },
+    include: [
+      {
+        model: User,
+      },
+      {
+        model: Like,
+      },
+    ],
+  });
+
+  res.status(201).json({ status: "success", data: responsePost });
 });
