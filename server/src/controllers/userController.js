@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Follower = require("../models/followerModel");
+const Like = require("../models/likeModel");
+const Post = require("../models/postModel");
 const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
@@ -52,12 +54,23 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 
 exports.getSingleUser = catchAsync(async (req, res, next) => {
   const { username } = req.params;
+
   const user = await User.findOne({
     where: { username },
-    include: {
-      model: Follower,
-      include: { model: User },
-    },
+    include: [
+      { model: Follower, attributes: ["followerId"] },
+      {
+        model: Post,
+        include: [
+          {
+            model: User,
+          },
+          {
+            model: Like,
+          },
+        ],
+      },
+    ],
   });
   if (!user)
     return res

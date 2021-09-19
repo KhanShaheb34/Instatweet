@@ -41,7 +41,7 @@ export class AxiosRedirectUnauthorize {
       throw new Error(
         JSON.stringify(
           error?.response ?? {
-            isSuccess: false,
+            isSuccess: "error",
             error: "Request Error",
             message: "Request Error",
           }

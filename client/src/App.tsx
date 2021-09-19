@@ -4,6 +4,7 @@ import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import "./App.css";
 import { Logout } from "./pages/logout";
+import { User } from "./pages/user";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/:username">
+            <User />
           </Route>
         </Switch>
       </Router>

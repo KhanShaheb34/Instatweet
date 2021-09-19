@@ -13,7 +13,6 @@ import { IconButton } from "@chakra-ui/button";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useToast } from "@chakra-ui/toast";
 import { Link } from "react-router-dom";
-import { AppRouteUi } from "../config/appRoutes";
 
 export const Post = (
   props: ExtendedPostSchema & { onDelete: (postId: string) => void }

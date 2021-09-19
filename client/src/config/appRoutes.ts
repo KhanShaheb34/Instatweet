@@ -5,6 +5,7 @@ export const AppRouteApi = {
   User: {
     Root: () => `${AppRouteApi.Root}/users`,
     Login: () => `${AppRouteApi.User.Root()}/login`,
+    SingleUser: (username: string) => `${AppRouteApi.User.Root()}/${username}`,
   },
   Post: {
     Root: () => `${AppRouteApi.Root}/posts`,
