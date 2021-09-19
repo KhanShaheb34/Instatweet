@@ -1,10 +1,10 @@
-import { Box, Text } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { Container } from "@chakra-ui/react";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAppSelector } from "../redux/ReduxStore";
 import { Link } from "react-router-dom";
 import { AppRouteUi } from "../config/appRoutes";
-import { Button, IconButton } from "@chakra-ui/button";
+import { IconButton } from "@chakra-ui/button";
 import { FiLogOut } from "react-icons/fi";
 import { Logo } from "./logo";
 
