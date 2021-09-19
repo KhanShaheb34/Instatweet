@@ -11,3 +11,23 @@ export const getSingleUser = async (username: string) => {
   if (res.data.status === "success") return res.data.data;
   else return false;
 };
+
+export const followUser = async (userId: string) => {
+  const res = await AxiosAuth.post<ApiResponseSchema<{ message: string }>>(
+    AppRouteApi.Follow.Root(),
+    { userId }
+  );
+
+  if (res.data.status === "success") return res.data.data;
+  else return false;
+};
+
+export const checkFollower = async (userId: string) => {
+  const res = await AxiosAuth.post<ApiResponseSchema<{ follow: boolean }>>(
+    AppRouteApi.Follow.Check(),
+    { userId }
+  );
+
+  if (res.data.status === "success") return res.data.data;
+  else return false;
+};

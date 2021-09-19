@@ -2,16 +2,59 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import { Layout } from "./layout";
 import { ExtendedUserSchema } from "../models/user";
-import { getSingleUser } from "../controllers/user";
+import { getSingleUser, checkFollower, followUser } from "../controllers/user";
 import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
 import { Box, Heading, Text } from "@chakra-ui/layout";
 import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
-import { RiEditLine, RiUserHeartLine } from "react-icons/ri";
 import { Post } from "../components/post";
 import { useAppSelector } from "../redux/ReduxStore";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiUserMinus, FiUserPlus } from "react-icons/fi";
+import { AddPost } from "../components/addPost";
+import { ExtendedPostSchema } from "../models/post";
+
+const FollowButton = ({ userId }: { userId: string }) => {
+  const [following, setFollowing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    checkFollower(userId).then((res) => {
+      res && setFollowing(res.follow);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const handleFollow = async () => {
+    setFollowing(!following);
+    const res = await followUser(userId);
+    res && setFollowing(res.message === "Followed");
+  };
+
+  return (
+    <Button
+      size="sm"
+      colorScheme={following ? "red" : "teal"}
+      variant="outline"
+      onClick={handleFollow}
+      disabled={isLoading}
+    >
+      {isLoading ? (
+        <Spinner />
+      ) : following ? (
+        <>
+          <FiUserMinus />
+          <Text ml={2}>Unfollow</Text>
+        </>
+      ) : (
+        <>
+          <FiUserPlus />
+          <Text ml={2}>Follow</Text>
+        </>
+      )}
+    </Button>
+  );
+};
 
 export const User = () => {
   const { username } = useParams<{ username: string }>();
@@ -47,6 +90,10 @@ export const User = () => {
   const onDelete = (id: string) => {
     user &&
       setUser({ ...user, posts: user?.posts.filter((post) => post.id !== id) });
+  };
+
+  const onPost = (post: ExtendedPostSchema) => {
+    user && setUser({ ...user, posts: [post, ...user.posts] });
   };
 
   return (
@@ -88,14 +135,12 @@ export const User = () => {
                     <Text ml={2}>Edit</Text>
                   </Button>
                 ) : (
-                  <Button size="sm" colorScheme="teal">
-                    <RiUserHeartLine />
-                    <Text ml={2}>Follow</Text>
-                  </Button>
+                  <FollowButton userId={user.id} />
                 )}
               </Box>
             </Box>
           </Box>
+          {ownProfile && <AddPost onPost={onPost} />}
           {user.posts.map((post) => (
             <Post key={post.id} onDelete={onDelete} {...post} />
           ))}

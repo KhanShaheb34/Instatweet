@@ -16,6 +16,10 @@ export const AppRouteApi = {
   Comment: {
     Root: () => `${AppRouteApi.Root}/comments`,
   },
+  Follow: {
+    Root: () => `${AppRouteApi.Root}/followers`,
+    Check: () => `${AppRouteApi.Follow.Root()}/check`,
+  },
 };
 
 export const AppRouteUi = {

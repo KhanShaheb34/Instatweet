@@ -26,7 +26,7 @@ exports.createFollower = catchAsync(async (req, res, next) => {
     });
   }
 
-  const newFollower = await Follower.create({
+  await Follower.create({
     followerId,
     userId,
   });
@@ -34,7 +34,25 @@ exports.createFollower = catchAsync(async (req, res, next) => {
   return res.status(201).json({
     status: "success",
     data: {
-      follower: newFollower,
+      message: "Followed",
+    },
+  });
+});
+
+exports.checkFollower = catchAsync(async (req, res, next) => {
+  const {
+    user: { id: followerId },
+    userId,
+  } = req.body;
+
+  const existingFollower = await Follower.findOne({
+    where: { followerId, userId },
+  });
+
+  return res.status(201).json({
+    status: "success",
+    data: {
+      follow: !!existingFollower,
     },
   });
 });
