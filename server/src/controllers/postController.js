@@ -26,8 +26,6 @@ exports.createPost = catchAsync(async (req, res, next) => {
     content,
   } = req.body;
 
-  console.log(userId);
-
   const newPost = await Post.create({
     content,
     userId,
@@ -46,4 +44,19 @@ exports.createPost = catchAsync(async (req, res, next) => {
   });
 
   res.status(201).json({ status: "success", data: responsePost });
+});
+
+exports.deletePost = catchAsync(async (req, res, next) => {
+  const {
+    user: { id: userId },
+  } = req.body;
+  const { id } = req.params;
+
+  const post = await Post.destroy({
+    where: { id, userId },
+  });
+
+  res
+    .status(201)
+    .json({ status: "success", data: { message: "Post Deleted" } });
 });

@@ -75,7 +75,7 @@ export const CommentsModal = ({
             <>
               {comments.length
                 ? comments.map((comment) => (
-                    <Box display="flex" mb={4}>
+                    <Box display="flex" key={comment.id} mb={4}>
                       <Avatar
                         src={`https://avatars.dicebear.com/api/micah/${comment.user.username}.svg`}
                         width="50px"

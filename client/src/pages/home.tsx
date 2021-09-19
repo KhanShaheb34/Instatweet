@@ -23,6 +23,10 @@ export const Home = () => {
     setPosts([post, ...posts]);
   };
 
+  const onDelete = (id: string) => {
+    setPosts(posts.filter((post) => post.id !== id));
+  };
+
   return (
     <Box bg="#FAFAFA" minH="100vh">
       <Navbar />
@@ -33,7 +37,7 @@ export const Home = () => {
         ) : (
           <>
             {posts.map((post) => (
-              <Post {...post} />
+              <Post key={post.id} onDelete={onDelete} {...post} />
             ))}
           </>
         )}

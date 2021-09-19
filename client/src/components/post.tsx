@@ -5,14 +5,17 @@ import { BsChatSquare, BsHeart, BsHeartFill } from "react-icons/bs";
 import { ExtendedPostSchema } from "../models/post";
 import { useAppSelector } from "../redux/ReduxStore";
 import { MotionBox } from "./motionBox";
-import { likePost } from "../controllers/post";
+import { likePost, deletePost } from "../controllers/post";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { CommentsModal } from "./comments";
 import moment from "moment";
 import { IconButton } from "@chakra-ui/button";
 import { AiOutlineDelete } from "react-icons/ai";
+import { useToast } from "@chakra-ui/toast";
 
-export const Post = (props: ExtendedPostSchema) => {
+export const Post = (
+  props: ExtendedPostSchema & { onDelete: (postId: string) => void }
+) => {
   const { id } = useAppSelector((state) => state.auth);
   const {
     isOpen: commentIsOpen,
@@ -24,13 +27,23 @@ export const Post = (props: ExtendedPostSchema) => {
   const [liked, setLiked] = useState(
     props.likes?.filter((like) => like.userId === id).length > 0
   );
+  const toast = useToast();
 
   const handleLike = () => {
     setLiked(!liked);
     likePost(props.id).then((res) => res && setLiked(res.message === "Liked"));
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    props.onDelete(props.id);
+    const res = deletePost(props.id);
+    toast({
+      title: !!res ? "Post Deleted" : "Something went wrong",
+      status: !!res ? "success" : "error",
+      duration: 9000,
+      isClosable: true,
+    });
+  };
 
   return (
     <>
@@ -41,7 +54,7 @@ export const Post = (props: ExtendedPostSchema) => {
         rounded="md"
         bg="white"
       >
-        <Box py={2} px={3} display="flex">
+        <Box py={2} px={3} display="flex" justifyContent="space-between">
           <Box display="flex" alignItems="center">
             <Avatar
               src={`https://avatars.dicebear.com/api/micah/${props.user.username}.svg`}
@@ -52,17 +65,18 @@ export const Post = (props: ExtendedPostSchema) => {
             <Text ml={3} fontWeight="bold">
               {props.user.username}
             </Text>
-            {ownPost && (
-              <IconButton
-                variant="outline"
-                colorScheme="red"
-                aria-label="Delete Comment"
-                icon={<AiOutlineDelete />}
-                size="sm"
-                onClick={handleDelete}
-              />
-            )}
           </Box>
+          {ownPost && (
+            <IconButton
+              variant="outline"
+              colorScheme="red"
+              aria-label="Delete Comment"
+              m={1}
+              icon={<AiOutlineDelete />}
+              size="sm"
+              onClick={handleDelete}
+            />
+          )}
         </Box>
 
         <Box

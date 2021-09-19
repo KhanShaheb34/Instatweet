@@ -31,3 +31,12 @@ export const createPost = async (content: string) => {
   if (res.data.status === "success") return res.data.data;
   else return false;
 };
+
+export const deletePost = async (postId: string) => {
+  const res = await AxiosAuth.delete<ApiResponseSchema<{ message: string }>>(
+    `${AppRouteApi.Post.Root()}/${postId}`
+  );
+
+  if (res.data.status === "success") return res.data.data;
+  else return false;
+};
