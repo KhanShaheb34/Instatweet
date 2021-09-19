@@ -86,7 +86,7 @@ export const Post = (
         </Box>
 
         <Box
-          bg="purple.700"
+          bg="teal.700"
           color="white"
           minH="250px"
           textAlign="center"
@@ -94,24 +94,26 @@ export const Post = (
           alignItems="center"
           justifyContent="center"
         >
-          <Heading p={5}>{props.content}</Heading>
+          <Heading p={5} overflowWrap="break-word" maxW="100%">
+            {props.content}
+          </Heading>
         </Box>
         <Box p={3} display="flex" justifyContent="space-between">
           <Box display="flex" fontSize={30}>
-            <MotionBox
-              onClick={handleLike}
-              cursor="pointer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {liked ? (
-                <BsHeartFill
-                  style={{ marginRight: "15px", color: "#ED4956" }}
-                />
-              ) : (
-                <BsHeart style={{ marginRight: "15px" }} />
-              )}
-            </MotionBox>
+            <Box mr={4}>
+              <MotionBox
+                onClick={handleLike}
+                cursor="pointer"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {liked ? (
+                  <BsHeartFill style={{ color: "#ED4956" }} />
+                ) : (
+                  <BsHeart />
+                )}
+              </MotionBox>
+            </Box>
             <MotionBox
               onClick={commentOpen}
               cursor="pointer"
