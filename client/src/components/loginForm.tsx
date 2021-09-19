@@ -8,10 +8,12 @@ import { useAppDispatch } from "../redux/ReduxStore";
 import { login } from "../redux/slices/sliceAuth";
 import { useHistory } from "react-router";
 import { AppRouteUi } from "../config/appRoutes";
+import { Spinner } from "@chakra-ui/spinner";
 
 export const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const toast = useToast();
   const dispatch = useAppDispatch();
@@ -19,6 +21,7 @@ export const LoginForm = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    setIsLoading(true);
     const data = await loginController(username, password);
     if (data) {
       dispatch(login(data));
@@ -30,6 +33,7 @@ export const LoginForm = () => {
         duration: 9000,
         isClosable: true,
       });
+    setIsLoading(false);
   };
 
   return (
@@ -48,7 +52,7 @@ export const LoginForm = () => {
         type="text"
         mb={2}
         value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={(e) => setUsername(e.target.value.toLowerCase())}
         isRequired
         placeholder="Username"
       />
@@ -60,8 +64,13 @@ export const LoginForm = () => {
         isRequired
         placeholder="Password"
       />
-      <Button colorScheme="teal" type="submit" variant="solid">
-        Login
+      <Button
+        disabled={isLoading}
+        colorScheme="teal"
+        type="submit"
+        variant="solid"
+      >
+        {isLoading && <Spinner />} Login
       </Button>
     </Box>
   );

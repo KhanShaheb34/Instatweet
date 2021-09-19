@@ -10,10 +10,10 @@ const User = sequelize.define("user", {
     primaryKey: true,
   },
   bio: {
-    type: DataTypes.STRING(250),
+    type: DataTypes.STRING(150),
   },
   name: {
-    type: DataTypes.STRING(50),
+    type: DataTypes.STRING(75),
   },
   email: {
     type: DataTypes.STRING(100),

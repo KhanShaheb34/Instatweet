@@ -21,7 +21,11 @@ exports.register = catchAsync(async (req, res, next) => {
   const password = await bcrypt.hash(plainPassword, salt);
 
   try {
-    const user = await User.create({ email, username, password });
+    const user = await User.create({
+      email,
+      username: username.toLowerCase(),
+      password,
+    });
     return res.status(201).json({ status: "success", data: user });
   } catch {
     return next(new AppError("User already exists", 409));
@@ -30,7 +34,10 @@ exports.register = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ where: { username: username }, raw: true });
+  const user = await User.findOne({
+    where: { username: username.toLowerCase() },
+    raw: true,
+  });
   if (!user) return next(new AppError("Wrong username or password", 401));
   const match = await bcrypt.compare(password, user.password);
   if (!match) return next(new AppError("Wrong username or password", 401));
@@ -56,7 +63,7 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
   const { username } = req.params;
 
   const user = await User.findOne({
-    where: { username },
+    where: { username: username.toLowerCase() },
     include: [
       { model: Follower, attributes: ["followerId"] },
       {
@@ -76,6 +83,46 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
     return res
       .status(404)
       .json({ status: "error", data: { message: "User not found" } });
+
+  return res.json({ status: "success", data: user });
+});
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const {
+    name,
+    bio,
+    user: { id },
+  } = req.body;
+
+  const updated = await User.update(
+    { name, bio },
+    {
+      where: { id },
+    }
+  );
+
+  if (!updated[0])
+    return res
+      .status(404)
+      .json({ status: "error", data: { message: "Update your own profile" } });
+
+  const user = await User.findOne({
+    where: { id },
+    include: [
+      { model: Follower, attributes: ["followerId"] },
+      {
+        model: Post,
+        include: [
+          {
+            model: User,
+          },
+          {
+            model: Like,
+          },
+        ],
+      },
+    ],
+  });
 
   return res.json({ status: "success", data: user });
 });

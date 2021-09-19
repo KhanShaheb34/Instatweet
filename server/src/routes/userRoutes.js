@@ -5,10 +5,15 @@ const {
   getAllUsers,
   login,
   getSingleUser,
+  updateUser,
 } = require("../controllers/userController");
 var router = express.Router();
 
-router.route("/").get(protect, getAllUsers).post(register);
+router
+  .route("/")
+  .get(protect, getAllUsers)
+  .post(register)
+  .put(protect, updateUser);
 router.route("/login").post(login);
 router.route("/:username").get(protect, getSingleUser);
 

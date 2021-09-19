@@ -2,7 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import { Layout } from "./layout";
 import { ExtendedUserSchema } from "../models/user";
-import { getSingleUser, checkFollower, followUser } from "../controllers/user";
+import {
+  getSingleUser,
+  checkFollower,
+  followUser,
+  updateUser,
+} from "../controllers/user";
 import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
 import { Box, Heading, Text } from "@chakra-ui/layout";
@@ -13,6 +18,18 @@ import { useAppSelector } from "../redux/ReduxStore";
 import { FiEdit, FiUserMinus, FiUserPlus } from "react-icons/fi";
 import { AddPost } from "../components/addPost";
 import { ExtendedPostSchema } from "../models/post";
+import { useDisclosure } from "@chakra-ui/hooks";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/modal";
+import { Input } from "@chakra-ui/input";
+import { Textarea } from "@chakra-ui/textarea";
 
 const FollowButton = ({ userId }: { userId: string }) => {
   const [following, setFollowing] = useState(false);
@@ -23,7 +40,7 @@ const FollowButton = ({ userId }: { userId: string }) => {
       res && setFollowing(res.follow);
       setIsLoading(false);
     });
-  }, []);
+  }, [userId]);
 
   const handleFollow = async () => {
     setFollowing(!following);
@@ -53,6 +70,95 @@ const FollowButton = ({ userId }: { userId: string }) => {
         </>
       )}
     </Button>
+  );
+};
+
+const EditProfileButton = ({
+  user,
+  onUpdate,
+}: {
+  user: ExtendedUserSchema;
+  onUpdate: (user: ExtendedUserSchema) => void;
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState(user.name);
+  const [bio, setBio] = useState(user.bio);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    const res = await updateUser(name, bio);
+    res && onUpdate(res);
+    setIsLoading(false);
+    onClose();
+  };
+
+  return (
+    <>
+      <Button size="sm" variant="outline" onClick={onOpen} colorScheme="teal">
+        <FiEdit />
+        <Text ml={2}>Edit</Text>
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Update Profile</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box>
+              <Input
+                value={username}
+                mb={2}
+                onChange={(e) => setUsername(e.target.value.toLowerCase())}
+                disabled
+                placeholder="username"
+              />
+              <Input
+                value={email}
+                mb={2}
+                onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                disabled
+                type="email"
+                maxLength={75}
+                placeholder="email"
+              />
+              <Input
+                value={name}
+                mb={2}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={50}
+                placeholder="Name"
+              />
+              <Textarea
+                resize="none"
+                maxLength={100}
+                placeholder="Bio"
+                value={bio}
+                mb={2}
+                onChange={(e) => setBio(e.target.value)}
+              />
+            </Box>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button
+              disabled={isLoading}
+              variant="outline"
+              colorScheme="teal"
+              onClick={handleSubmit}
+            >
+              {isLoading && <Spinner />} Update
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
@@ -115,25 +221,31 @@ export const User = () => {
                 height="100px"
                 border="1px solid #DBDBDB"
               />
-              <Box mt={[3, 3, 0]} ml={[0, 0, 3]}>
-                <Heading size="md" mb={1}>
+              <Box
+                mt={[3, 3, 0]}
+                ml={[0, 0, 3]}
+                textAlign={["center", "center", "left"]}
+              >
+                <Heading size="md" mb={2}>
                   {user.username}
                   {user.name && (
-                    <Text display="inline" ml={2} fontWeight="light">
+                    <Text display="inline" ml={1} fontSize="sm">
                       ({user.name})
                     </Text>
                   )}
                 </Heading>
                 {user.bio && (
-                  <Heading size="sm" mb={2} fontWeight="light">
+                  <Heading size="sm" color="gray" mb={2} fontWeight="light">
                     {user.bio}
                   </Heading>
                 )}
                 {ownProfile ? (
-                  <Button size="sm" colorScheme="teal">
-                    <FiEdit />
-                    <Text ml={2}>Edit</Text>
-                  </Button>
+                  <>
+                    <EditProfileButton onUpdate={setUser} user={user} />
+                    <Heading size="sm" mt={2} fontWeight="light">
+                      You have {user.followers.length} followers
+                    </Heading>
+                  </>
                 ) : (
                   <FollowButton userId={user.id} />
                 )}
