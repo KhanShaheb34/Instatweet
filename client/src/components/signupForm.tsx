@@ -6,7 +6,7 @@ import { signupController } from "../controllers/auth";
 import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
 
-export const SignupForm = () => {
+export const SignupForm = ({ onSignUp }: { onSignUp: () => void }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +30,7 @@ export const SignupForm = () => {
       setUsername("");
       setEmail("");
       setPassword("");
+      onSignUp();
     }
     setIsLoading(false);
   };
@@ -44,6 +45,7 @@ export const SignupForm = () => {
       justifyContent="center"
       alignItems="center"
       onSubmit={handleSubmit}
+      minW="80%"
     >
       <Input
         type="text"

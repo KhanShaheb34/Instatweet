@@ -1,8 +1,12 @@
-import { Box, Heading } from "@chakra-ui/layout";
+import { Box, Heading, Text } from "@chakra-ui/layout";
+import { useState } from "react";
 import { LoginForm } from "../components/loginForm";
+import { Logo } from "../components/logo";
 import { SignupForm } from "../components/signupForm";
 
 export const Login = () => {
+  const [login, setLogin] = useState(true);
+
   return (
     <Box
       height="100vh"
@@ -10,6 +14,7 @@ export const Login = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      background="#FAFAFA"
     >
       <Box
         border="1px solid #DBDBDB"
@@ -18,14 +23,24 @@ export const Login = () => {
         maxW={800}
         display="flex"
         flexDirection="column"
+        alignItems="center"
+        m={2}
+        background="white"
+        minW="35%"
       >
-        <Heading mb={3} textAlign="center" fontWeight="light">
-          Login or Sign Up
+        <Logo noLink />
+        <Heading mb={3} size="lg" textAlign="center" fontWeight="light">
+          {login ? "Login" : "Sign Up"}
         </Heading>
-        <Box display="flex">
-          <LoginForm />
-          <SignupForm />
-        </Box>
+        {login ? <LoginForm /> : <SignupForm onSignUp={() => setLogin(true)} />}
+        <Text
+          color="teal"
+          cursor="pointer"
+          _hover={{ textDecoration: "underline" }}
+          onClick={() => setLogin(!login)}
+        >
+          {login ? "Don't have an account?" : "Already have an account!"}
+        </Text>
       </Box>
     </Box>
   );

@@ -41,12 +41,12 @@ export const LoginForm = () => {
       as="form"
       flexGrow={1}
       p={3}
-      borderRight="1px solid #DBDBDB"
       display="flex"
       justifyContent="center"
       flexDirection="column"
       alignItems="center"
       onSubmit={handleSubmit}
+      minW="80%"
     >
       <Input
         type="text"
