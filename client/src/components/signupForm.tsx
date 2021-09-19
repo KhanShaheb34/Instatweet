@@ -51,7 +51,9 @@ export const SignupForm = ({ onSignUp }: { onSignUp: () => void }) => {
         type="text"
         mb={2}
         value={username}
-        onChange={(e) => setUsername(e.target.value.toLowerCase())}
+        onChange={(e) =>
+          setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, ""))
+        }
         isRequired
         placeholder="Username"
       />
@@ -59,7 +61,7 @@ export const SignupForm = ({ onSignUp }: { onSignUp: () => void }) => {
         type="email"
         mb={2}
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value.toLowerCase())}
         isRequired
         placeholder="Email"
       />
