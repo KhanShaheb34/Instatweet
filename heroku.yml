@@ -1,3 +1,7 @@
 build:
   docker:
     web: api/dockerfile
+  config:
+    DB_URI: "postgres://xtlflikx:f9xjvpAe-cn5MPSH9zE_lUTeGErhzbaO@chunee.db.elephantsql.com/xtlflikx"
+    JWT_SECRET: "daskdhauyd89aydhq7u38uyhq809y8hyw"
+    NODE_ENV: "production"
