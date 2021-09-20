@@ -29,21 +29,21 @@ You can run the project in these ways:
 
 ### Docker
 
-Build and run the [docker compose file](docker-compose.yml) using:
-
-```sh
-docker-compose up
-```
-
-If you change anything in the source code, please build the [docker compose file](docker-compose.yml) again using:
+Build and build the [docker compose file](docker-compose.yml) using:
 
 ```sh
 docker-compose build
 ```
 
-The application will start on http://localhost:3000/ 
+Now run the application by using:
 
-> NB: The api might fail to connect to the database at first time because the database takes time to initialize. Please shut down the project using `ctrl` + `c`, then run it again.
+```sh
+docker-compose up
+```
+
+If you change anything in the source code, please build the [docker compose file](docker-compose.yml) again. And please ensure that port 3000 is unallocated.
+
+The application will start on [http://localhost:3000/](http://localhost:3000/).
 
 > Please keep in mind that, running this project from docker, it will initialize an empty database.
 
