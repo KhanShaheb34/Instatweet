@@ -1,12 +1,23 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(process.env.DB_URI);
+
+const config = {
+  development: {},
+  production: { logging: false },
+  docker: { logging: false },
+};
+
+const sequelize = new Sequelize(
+  process.env.DB_URI,
+  config[process.env.NODE_ENV]
+);
 
 (async () => {
   try {
+    if (process.env.DB_SETUP === "true") {
+      await sequelize.sync({ force: true });
+      await sequelize.sync();
+    }
     await sequelize.authenticate();
-
-    // await sequelize.sync({ force: true });
-    // await sequelize.sync();
 
     console.log("Connection has been established successfully.");
   } catch (error) {

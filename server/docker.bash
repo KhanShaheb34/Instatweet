@@ -1,0 +1,3 @@
+docker run -p 5433:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=admin -e POSTGRES_DB=kmdb -v G:\Projects\kichmich\pgdata:/var/lib/postgresql/data postgres
+docker run -p 5433:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=admin -e POSTGRES_DB=kmdb postgres
+docker run -p 8000:8000 -e DB_URI=postgres://admin:pass@172.17.0.1:5433/itdb -e JWT_SECRET=5rfg4RTGYH987UY87y6ol -e NODE_ENV=docker -e DB_SETUP=true itserver

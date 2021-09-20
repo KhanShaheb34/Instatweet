@@ -1,2 +1,0 @@
-docker run -p 5433:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=admin -e POSTGRES_DB=kmdb -v G:\Projects\kichmich\pgdata:/var/lib/postgresql/data postgres
-docker run -p 5433:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=admin -e POSTGRES_DB=kmdb postgres

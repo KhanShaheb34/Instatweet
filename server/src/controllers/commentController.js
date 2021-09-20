@@ -1,5 +1,5 @@
 const Comment = require("../models/commentModel");
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 
 exports.getPostComments = catchAsync(async (req, res, next) => {

@@ -1,7 +1,7 @@
 const Post = require("../models/postModel");
 const Comment = require("../models/commentModel");
 const catchAsync = require("../utils/catchAsync");
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 const Like = require("../models/likeModel");
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
