@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - "./pgdata:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: "pass"
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "itdb"
+
+  api:
+    build: ./api
+    depends_on:
+      - db
+    environment:
+      DB_URI: "postgres://admin:pass@db:5432/itdb"
+      JWT_SECRET: "LongUglyJWTSecret"
+      NODE_ENV: "docker"
+      DB_SETUP: "true"
+
+  client:
+    build:
+      context: ./client
+      args:
+        REACT_APP_API_URL: "/api"
+    depends_on:
+      - db
+
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build: ./server
+    ports:
+      - "3050:80"
