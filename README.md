@@ -2,7 +2,10 @@
 
 A twitter clone that looks like instagram but does not have that many features. This is a project for a Web-Tech course.
 
+![Website Status](https://img.shields.io/website?down_color=red&down_message=down&up_color=green&up_message=up&url=https%3A%2F%2Finstatweet.netlify.app%2F)
 ![Wakatime Badge](https://wakatime.com/badge/github/KhanShaheb34/Instatweet.svg)
+
+> ### Visit [instatweet.netlify.app](https://instatweet.netlify.app/) to view the application in action!
 
 ## Features
 
