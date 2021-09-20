@@ -2,11 +2,11 @@
 
 Created using ReactJs, Chakra UI, Axios, Redux-Toolkit and Typescript
 
-## Available Scripts
+## Run the project
 
-In the project directory, you can run:
+You can run the project in these ways:
 
-### `docker`
+### Docker
 
 At first build the container using:
 
@@ -20,7 +20,17 @@ Then run the docker image using:
 docker run itclient
 ```
 
-### `npm start`
+### Development Server
+
+```sh
+npm install
+```
+
+Installs all of the required packages to run the project
+
+```sh
+npm start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -28,7 +38,17 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm run build`
+### Production Build
+
+```sh
+npm install
+```
+
+Installs all of the required packages to run the project
+
+```sh
+npm run build
+```
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.

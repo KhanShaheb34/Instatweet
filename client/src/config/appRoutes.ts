@@ -1,4 +1,4 @@
-const RootApi = "http://192.168.0.104:8000";
+const RootApi = process.env.SERVER_URL || "http://localhost:8000";
 
 export const AppRouteApi = {
   Root: RootApi,
