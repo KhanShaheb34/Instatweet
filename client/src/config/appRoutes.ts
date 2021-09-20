@@ -1,4 +1,4 @@
-const RootApi = process.env.SERVER_URL || "http://localhost:8000";
+const RootApi = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
 export const AppRouteApi = {
   Root: RootApi,
