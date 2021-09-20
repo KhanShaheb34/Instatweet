@@ -6,7 +6,10 @@ const config = {
   docker: { logging: false, dialect: "postgres" },
 };
 
-const sequelize = new Sequelize(process.env.DB_URI, config);
+const sequelize = new Sequelize(
+  process.env.DB_URI,
+  config[process.env.CURRENT_ENV || "development"]
+);
 
 (async () => {
   try {
