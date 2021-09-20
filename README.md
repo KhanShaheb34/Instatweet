@@ -41,6 +41,8 @@ If you change anything in the source code, please build the [docker compose file
 docker-compose build
 ```
 
+The application will start on http://localhost:3000/ 
+
 > NB: The api might fail to connect to the database at first time because the database takes time to initialize. Please shut down the project using `ctrl` + `c`, then run it again.
 
 > Please keep in mind that, running this project from docker, it will initialize an empty database.
