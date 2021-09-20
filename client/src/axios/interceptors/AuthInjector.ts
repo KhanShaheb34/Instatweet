@@ -1,7 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from "axios";
-
-// Request interceptor for Axios that injects auth header on every request
-export class AxiosAuthInjector {
+export class AuthInjector {
   /**
    * @static @function Add() Add interceptor to and instance
    * @param {AxiosInstance} instance Instance of Axios
@@ -11,15 +9,15 @@ export class AxiosAuthInjector {
     function AuthTokenInject(
       requestConfig: AxiosRequestConfig
     ): AxiosRequestConfig {
-      const accessToken = localStorage.getItem("token");
-      const authHeader = !!accessToken
+      const token = localStorage.getItem("token");
+      const header = !!token
         ? {
-            authorization: `Bearer ${accessToken}`,
+            authorization: `Bearer ${token}`,
           }
         : {};
       const headers = {
         ...(requestConfig.headers ?? {}),
-        ...authHeader,
+        ...header,
       };
       return { ...requestConfig, headers };
     }
