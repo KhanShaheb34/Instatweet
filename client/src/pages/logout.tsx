@@ -13,5 +13,5 @@ export const Logout = () => {
     history.push(AppRouteUi.Login());
   }, []);
 
-  return <h1>Logging Out</h1>;
+  return <></>;
 };

@@ -1,11 +1,17 @@
 import { Box, Heading, Text } from "@chakra-ui/layout";
 import { useState } from "react";
+import { Redirect } from "react-router";
 import { LoginForm } from "../components/loginForm";
 import { Logo } from "../components/logo";
 import { SignupForm } from "../components/signupForm";
+import { useAppSelector } from "../redux/ReduxStore";
 
 export const Login = () => {
   const [login, setLogin] = useState(true);
+
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
+
+  if (isLoggedIn) return <Redirect to="/" />;
 
   return (
     <Box
