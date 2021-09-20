@@ -65,5 +65,5 @@ Additional environment variables you can pass to the project:
 ```env
 JWT_SECRET=jwt_secret
 PORT=port
-CURRENT_ENV=development/production
+NODE_ENV=development/production
 ```

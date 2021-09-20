@@ -8,7 +8,7 @@ const config = {
 
 const sequelize = new Sequelize(
   process.env.DB_URI,
-  config[process.env.CURRENT_ENV || "development"]
+  config[process.env.NODE_ENV || "development"]
 );
 
 const connectDb = async () => {
