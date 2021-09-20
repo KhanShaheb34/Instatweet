@@ -21,6 +21,7 @@ import {
 import { CommentSchema } from "../models/comment";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useAppSelector } from "../redux/ReduxStore";
+import { Link } from "react-router-dom";
 
 export const CommentsModal = ({
   isOpen,
@@ -77,6 +78,8 @@ export const CommentsModal = ({
                 ? comments.map((comment) => (
                     <Box display="flex" key={comment.id} mb={4}>
                       <Avatar
+                        as={Link}
+                        to={`/${comment.user.username}`}
                         src={`https://avatars.dicebear.com/api/micah/${comment.user.username}.svg`}
                         width="50px"
                         height="50px"
@@ -85,7 +88,11 @@ export const CommentsModal = ({
                       <Box ml={3} w="100%">
                         <Box display="flex" justifyContent="space-between">
                           <Box>
-                            <Text fontWeight="bold">
+                            <Text
+                              fontWeight="bold"
+                              as={Link}
+                              to={`/${comment.user.username}`}
+                            >
                               {comment.user.username}
                             </Text>
                             <Text size="sm" fontWeight="light" color="#aaa">
